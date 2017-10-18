@@ -1,0 +1,24 @@
+<div class="mos-filter-section filter-container {{field.field}}">
+	<div class="filter-header pointer" ng-class= "{'header-dark-background':field.openfilter}" 
+		ng-click="removeError(null);openFilterFunction(field)">
+		<span class="filter-label text-uppercase text-ellipsis" ng-show="!currentfilter" tooltip="{{::field.description}}" tooltip-placement="top" tooltip-popup-delay="{{::dpConfig.toolTipDelay}}">{{field.description}}</span>
+		<span class="mos-ico icon icon-xs clear-filter-icon" ng-show="currentfilter" ng-click="clearFilter(field,field.searchFieldValues,false,$event)"></span>
+		<span class="filter-label text-ellipsis text-uppercase" ng-show="currentfilter">{{currentfilter}}</span>
+		<span ng-class="{'mos-ico icon icon-xs collapse-icon-pos collapse-icon' : !field.openfilter, 'mos-ico icon icon-xs collapse-icon-pos expand-icon' : field.openfilter }"></span>
+	</div>
+	<dp-loading-circles loading-text="loading" circle-color="black" loading-theme="black" ng-show="field.loading">
+	</dp-loading-circles>
+	<div ng-show="field.openfilter" class= "filter-element-container" description="{{field.description}}">
+		<div class="filter-list" ng-repeat="filterObj in field.searchFieldValues" 
+			ng-click="validate(field,field.searchFieldValues,true,filterObj.name)">
+			<span class="mos-ico icon-xxs icon custom-checkbox" ng-class= "{'selected-tag' : currentfilter == filterObj.name}">
+			</span>
+			<span class= "text-uppercase">
+			{{::filterObj.name}} ({{::filterObj.count}})
+			</span> 
+		</div>
+	</div>
+	<p class="filter-error-container" ng-show="errormessage">
+		<span class='error'>{{errormessage}}</span>
+	</p>
+</div>

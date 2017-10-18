@@ -1,0 +1,34 @@
+<div class="mos-filter-section filter-container {{::field.field}}">
+	<div class="filter-header pointer" ng-class= "{'header-dark-background':field.openfilter}" 
+		ng-click="removeError(null);openFilterFunction(field)">
+		<span class="filter-label text-uppercase text-ellipsis" ng-show="!field.anyselected" tooltip="{{::field.description}}" tooltip-placement="top" tooltip-popup-delay="{{::dpConfig.toolTipDelay}}">{{::field.description}}</span>
+		<span class="mos-ico icon icon-xs clear-filter-icon" ng-show="field.anyselected" ng-click="clearFilter(field,field.searchFieldValues,false,$event)"></span>
+		<span class="filter-label text-ellipsis text-uppercase" ng-show="field.anyselected">{{(currentfilter.end == '*') ? '>' : ''}}{{(currentfilter.start.indexOf('above ') > -1) ? currentfilter.start.split('above ')[1] : currentfilter.start}}{{(currentfilter.end == '*') ? '' : -currentfilter.end}} {{currentfilter.placeholder}}</span>
+		<span 
+			ng-class="{'mos-ico icon icon-xs collapse-icon-pos collapse-icon' : !field.openfilter, 'mos-ico icon icon-xs collapse-icon-pos expand-icon' : field.openfilter }"></span>
+	</div>
+	<dp-loading-circles loading-text="loading" circle-color="black" loading-theme="black" ng-show="field.loading">
+	</dp-loading-circles>
+	<div ng-show="field.openfilter" class= "filter-element-container" description="{{::field.description}}">
+		<div class="filter-list" ng-repeat="filterObj in field.searchFieldValues" 
+			ng-click="(filterObj.start === -1) || (filterObj.end === -1) || validate(field,field.searchFieldValues,true,filterObj)">
+			<span class="mos-ico icon-xxs icon custom-checkbox" ng-class= "{'selected-tag' : filterObj.checked}">
+			</span>
+			<span ng-if= "(filterObj.start === -1) || (filterObj.end === -1)">-</span>
+			<span ng-if= "((filterObj.end >= 0) || (filterObj.end === '')) && (filterObj.start !== -1)">
+			{{::filterObj.start}}<span ng-if="filterObj.end !== ''">- {{::filterObj.end}}</span> 
+			{{::field.placeholder}} 
+			({{::filterObj.total_records}})
+			</span> 
+		</div>
+		<div class="filter-buttons filter-elem-cont" ng-show="field.searchFieldValues.length>0">
+			<input class= "{{::field.field}}-start" type="text" maxlength="{{field.field == 'price' ? 7 : 4}}" placeholder="From {{::field.placeholder}}"class="custom-range-val" ng-model= "start" ng-keypress="validateValue($event)">
+			<input class= "{{::field.field}}-end" type="text" maxlength="{{field.field == 'price' ? 7 : 4}}" placeholder="To {{::field.placeholder}}" 
+				class="custom-range-val" ng-model="end" ng-keypress="validateValue($event)">
+			<button type="button" class="mos-ico icon icon-md right-grey-arrw" ng-click="validate(field,field.searchFieldValues,false)"></button>
+		</div>
+	</div>
+	<p class="filter-error-container" ng-show="errormessage">
+		<span class='error'>{{errormessage}}</span>
+	</p>
+</div>

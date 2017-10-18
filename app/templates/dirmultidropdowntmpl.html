@@ -1,0 +1,24 @@
+<div class="mos-filter-section filter-container dropdown-filter-multiple {{field.field}}">
+	<div class="filter-header pointer" ng-hide="field.openfilter" ng-class= "{'header-dark-background' : field.openfilter}" 
+             ng-click="removeError(null);openFilter({'field':field})">
+		<span class="filter-label text-uppercase text-ellipsis" ng-show="!currentfilter" tooltip="{{::field.description}}" tooltip-placement="top" tooltip-popup-delay="{{::dpConfig.toolTipDelay}}">{{field.description}}</span>
+		<span class="mos-ico icon icon-xs clear-filter-icon" ng-show="currentfilter" ng-click="clearFilter(false,$event)"></span>
+		<span class="filter-label text-uppercase text-ellipsis" ng-show="currentfilter">{{currentfilter}}</span>
+		<span ng-class="{'mos-ico icon icon-xs collapse-icon-pos collapse-icon' : !field.openfilter, 'mos-ico icon icon-xs collapse-icon-pos expand-icon' : field.openfilter }"></span>
+	</div>
+	<div class= "dropdown-filter-container input-filter" ng-show="field.openfilter" description="{{field.description}}">
+		<div>
+			<span class="mos-ico icon icon-xs clear-filter-icon" ng-show="currentfilter" ng-click="clearFilter(false,$event)"></span>
+			<ui-select multiple='true' ng-model="selectedValue.value" ng-change="validate()" theme="bootstrap" search-enabled="true" class="filter-input text-uppercase">
+				<ui-select-match allow-clear="true" placeholder="TYPE {{(field.description).toUpperCase()}}">
+					{{$item.name}}
+				</ui-select-match>
+				<ui-select-choices repeat="value in field.searchFieldValues | filter: $select.search track by $index">
+					<div class="filter-label-value" tooltip="{{value.name}} ({{value.count}})" tooltip-popup-delay="{{::dpConfig.toolTipDelay}}" ng-mouseenter="showTooltip($event, $last)" ng-mouseout="resetClasses($event)">{{value.name}} ({{value.count}})</div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<dp-loading-circles loading-text="loading" circle-color="black" loading-theme="black" ng-if="field.loading">
+	</dp-loading-circles>
+</div>

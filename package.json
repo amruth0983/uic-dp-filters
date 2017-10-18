@@ -1,0 +1,23 @@
+{
+	"name": "dp-reusable-filters",
+	"version": "1.0.0",
+	"description": "POC to make all the filters used in DP as reusable",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/amruth0983/POC.git"
+	},
+	"keywords": [
+		"Angular",
+		"npm"
+	],
+	"author": "Amruth",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/amruth0983/POC/issues"
+	},
+	"homepage": "https://github.com/amruth0983/POC#readme"
+}

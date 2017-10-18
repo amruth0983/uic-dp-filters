@@ -1,0 +1,20 @@
+<div class="mos-filter-section filter-container textbox-filter {{field.field}}">
+	<div class="filter-header pointer" ng-class= "{'header-dark-background':field.openfilter}" 
+		ng-click="removeError(null);openFilter({'field':field})">
+		<span class="filter-label text-uppercase text-ellipsis" ng-show="!currentfilter" tooltip="{{::field.description}}" tooltip-placement="top" tooltip-popup-delay="{{::dpConfig.toolTipDelay}}">{{field.description}}</span>
+		<span class="mos-ico icon icon-xs clear-filter-icon" ng-show="currentfilter" ng-click="clearFilter(field,false,$event)"></span>
+		<span class="filter-label text-ellipsis text-uppercase" ng-show="currentfilter">{{currentfilter.start}} {{currentfilter.placeholder}}</span>
+		<span ng-class="{'mos-ico icon icon-xs collapse-icon-pos collapse-icon' : !field.openfilter, 'mos-ico icon icon-xs collapse-icon-pos expand-icon' : field.openfilter }"></span>
+	</div>
+	<dp-loading-circles loading-text="loading" circle-color="black" loading-theme="black" ng-show="field.loading">
+	</dp-loading-circles>
+	<div ng-show="field.openfilter" class= "filter-element-container" description="{{field.description}}">
+		<div class="filter-buttons filter-elem-cont">
+			<input class= "{{field.field}}-start" type="text" placeholder="{{field.description}}" class="custom-range-val" ng-model= "start" ng-keypress="validateValue($event)">
+			<button type="button" class="mos-ico icon icon-md right-grey-arrw" ng-click="validate(field)"></button>
+		</div>
+	</div>
+	<p class="filter-error-container" ng-show="errormessage">
+		<span class='error'>{{errormessage}}</span>
+	</p>
+</div>

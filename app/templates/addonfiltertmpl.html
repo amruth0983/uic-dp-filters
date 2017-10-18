@@ -1,0 +1,13 @@
+<div class= "last-used-basket-container" ng-repeat="filter in msvm.addonfilterdata" >
+	<dp-loading-circles loading-text="loading" circle-color="black" loading-theme="black" ng-show="msvm.filterloading">
+	</dp-loading-circles>
+	<fieldset class= "recent-item" ng-repeat="field in filter" ng-click="msvm.addColumns(field,$event);msvm.addColumnsToFilter($event,true);">
+		<div class="overlay"></div>
+		<span class= "icon mos-ico custom-checkbox select-basket" ng-class= "{'selected-tag':field.selected}">
+		</span>
+		<div class= "text-ellipsis">
+			<span tooltip="{{::field.description}}" tooltip-placement="top" tooltip-popup-delay="{{::msvm.dpConfig.toolTipDelay}}" tooltip-append-to-body= "true">{{::field.description}}</span>
+		</div>
+		<div class="clearfix"> </div>
+	</fieldset>
+</div>

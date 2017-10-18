@@ -1,0 +1,47 @@
+<div class="mos-filter-section filter-container hybrid-filter-container {{field.field}}">
+	<div class="filter-header pointer" ng-class= "{'header-dark-background' : field.openfilter}" 
+		ng-click="removeError(null);openFilter({'field':field})">
+		<span class="filter-label text-uppercase text-ellipsis" ng-show="!currentfilter" tooltip="{{::field.description}}" tooltip-placement="top" tooltip-popup-delay="{{::dpConfig.toolTipDelay}}">{{field.description}}</span>
+		<span class="mos-ico icon icon-xs clear-filter-icon" ng-show="currentfilter" ng-click="clearFilter(false,$event)"></span>
+		<span class="filter-label text-ellipsis text-uppercase" ng-show="currentfilter">{{currentfilter}}</span>
+		<span 
+			ng-class="{'mos-ico icon icon-xs collapse-icon-pos collapse-icon' : !field.openfilter, 'mos-ico icon icon-xs collapse-icon-pos expand-icon' : field.openfilter }" ></span>
+	</div>
+	<dp-loading-circles loading-text="loading" circle-color="black" loading-theme="black" ng-show="field.loading">
+	</dp-loading-circles>
+	<div class= "filter-elem-cont" ng-show="field.openfilter" description="{{field.description}}">
+		<div class="filter-list" style="display: inline-flex" ng-repeat="n in [] | range:controlsCount">
+			<div class="composition-select" ng-init="selectedItems[$index]={}">
+				<ui-select theme="bootstrap" ng-model="selectedItems[$index].type" reset-search-input="true" class="filter-input" elem="type{{$index}}">
+					<ui-select-match class= "text-uppercase" placeholder="-">{{$select.selected.name}}</ui-select-match>
+					<ui-select-choices class= "text-uppercase" repeat="value in field.searchFieldValues | filter: $select.search">
+						<div class="filter-label-value" tooltip="{{value.name}} ({{value.count}})" tooltip-popup-delay="{{::dpConfig.toolTipDelay}}" ng-mouseenter="showTooltip($event, $last)" ng-mouseout="resetClasses($event)">{{value.name}} ({{value.count}})</div>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+			<div class="filter-range">
+				<input class= "{{field.field}}-start {{$index}}" type="text" maxlength="3" placeholder="0{{field.placeholder || '%' }}" class="custom-range-val" ng-model="selectedItems[$index].start" ng-keypress="validateValue($event)" elem="start{{$index}}">
+				<input class= "{{field.field}}-end {{$index}}" type="text" maxlength="3" placeholder="100{{field.placeholder || '%' }}" class="custom-range-val" ng-model="selectedItems[$index].end" ng-keypress="validateValue($event)" elem="end{{$index}}">
+			</div>
+		</div>
+		<div class="filter-buttons">
+			<div class= "add-remove-section">
+				<div class= "add-section" ng-click="addElement();">
+					<span class="mos-ico icon add-icon"></span>
+					<span class="add-new-filter text-uppercase">Add</span>
+				</div>
+				<div class="remove-section">
+					<span class="mos-ico icon icon-sm remove-compo-filter pull-left" 
+						ng-click="removeElement(field);"
+						ng-show="controlsCount>1"></span>
+				</div>
+			</div>
+			<div class= "submit-composition">
+				<button type="button" class="mos-ico icon icon-md right-grey-arrw" ng-click="validate(field)"></button>
+			</div>
+		</div>
+	</div>
+	<p class="filter-error-container" ng-show="errormessage">
+		<span class='error'>{{errormessage}}</span>
+	</p>
+</div>
