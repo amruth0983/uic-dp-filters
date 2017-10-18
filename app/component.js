@@ -1,6 +1,6 @@
-var angular = require('../lib/angular/angular.min.js');
+var angular = require('./lib/angular/angular.min.js');
 
-require('../lib/angular/jquery-2.1.4.min.js');
+require('./lib/jquery-2.1.4.min.js');
 require('../node_modules/ui-component/dist/ui-component.min.js');
 
 angular.module('uic-dp-filter', []);

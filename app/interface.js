@@ -1,5 +1,5 @@
 var Component = require('../node_modules/ui-component/dist/ui-component.min.js'),
-  _ = require('../lib/lodash.js'),
+  _ = require('./lib/lodash.js'),
   angular = require('../lib/angular/angular.min.js');
 
 require('./component.js');

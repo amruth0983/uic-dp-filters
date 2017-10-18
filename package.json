@@ -1,23 +1,27 @@
 {
-	"name": "dp-reusable-filters",
-	"version": "1.0.0",
-	"description": "POC to make all the filters used in DP as reusable",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/amruth0983/POC.git"
-	},
-	"keywords": [
-		"Angular",
-		"npm"
-	],
-	"author": "Amruth",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/amruth0983/POC/issues"
-	},
-	"homepage": "https://github.com/amruth0983/POC#readme"
+  "name": "reusable-filters",
+  "version": "1.0.0",
+  "description": "Reusable filters",
+  "main": "app/interface.js",
+  "dependencies": {
+    "angular": "^1.6.6",
+    "event-emitter": "^1.1.1",
+    "eventemitter3": "^2.0.3",
+    "lodash": "^4.17.4",
+    "ui-component": "^2.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amruth0983/reusable-filters.git"
+  },
+  "author": "“Amruth” <“amruthrao4u@gmail.com”>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amruth0983/reusable-filters/issues"
+  },
+  "homepage": "https://github.com/amruth0983/reusable-filters#readme"
 }
