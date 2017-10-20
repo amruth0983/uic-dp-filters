@@ -1,9 +1,7 @@
-var angular = require('angular');
-
 angular.module('uic-dp-filter')
 	.directive('dpCheckboxFilter', function () {
 	return {
-		restrict: 'E',
+		restrict: 'A',
 		scope: {
 			'field': '=fieldvalue',
 			'openFilter': '&openFilter',
@@ -110,6 +108,6 @@ angular.module('uic-dp-filter')
 				}
 			});
 		},
-		templateUrl: '../app/templates/dircheckboxtmpl.html'
+		template: require('../templates/dircheckboxtmpl.html')
 	};
 });

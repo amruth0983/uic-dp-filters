@@ -1,8 +1,57 @@
 {
-  "name": "reusable-filters",
-  "version": "1.0.2",
-  "description": "Reusable filters",
-  "main": "app/interface.js",
+  "_args": [
+    [
+      {
+        "raw": "reusable-filters",
+        "scope": null,
+        "escapedName": "reusable-filters",
+        "name": "reusable-filters",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "E:\\DPBackend1\\src\\main\\webapp\\ngapp"
+    ]
+  ],
+  "_from": "reusable-filters@latest",
+  "_id": "reusable-filters@1.0.3",
+  "_inCache": true,
+  "_location": "/reusable-filters",
+  "_nodeVersion": "7.10.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/reusable-filters-1.0.3.tgz_1508468822177_0.4168872020673007"
+  },
+  "_npmUser": {
+    "name": "amruth0983",
+    "email": "amruthrao4u@gmail.com"
+  },
+  "_npmVersion": "4.2.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "reusable-filters",
+    "scope": null,
+    "escapedName": "reusable-filters",
+    "name": "reusable-filters",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/reusable-filters/-/reusable-filters-1.0.3.tgz",
+  "_shasum": "a533a7457fee8bb9ecaadd8cf560ab284b991ce5",
+  "_shrinkwrap": null,
+  "_spec": "reusable-filters",
+  "_where": "E:\\DPBackend1\\src\\main\\webapp\\ngapp",
+  "author": {
+    "name": "“Amruth”",
+    "email": "“amruthrao4u@gmail.com”"
+  },
+  "bugs": {
+    "url": "https://github.com/amruth0983/reusable-filters/issues"
+  },
   "dependencies": {
     "angular": "^1.6.6",
     "event-emitter": "^1.1.1",
@@ -10,18 +59,32 @@
     "lodash": "^4.17.4",
     "ui-component": "^2.1.1"
   },
+  "description": "Reusable filters",
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "directories": {},
+  "dist": {
+    "shasum": "a533a7457fee8bb9ecaadd8cf560ab284b991ce5",
+    "tarball": "https://registry.npmjs.org/reusable-filters/-/reusable-filters-1.0.3.tgz"
   },
+  "gitHead": "a4c6ff05aca6c8a3a072cccc645212eb1e1fa6a4",
+  "homepage": "https://github.com/amruth0983/reusable-filters#readme",
+  "license": "ISC",
+  "main": "app/interface.js",
+  "maintainers": [
+    {
+      "name": "amruth0983",
+      "email": "amruthrao4u@gmail.com"
+    }
+  ],
+  "name": "reusable-filters",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amruth0983/reusable-filters.git"
   },
-  "author": "“Amruth” <“amruthrao4u@gmail.com”>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/amruth0983/reusable-filters/issues"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/amruth0983/reusable-filters#readme"
+  "version": "1.0.3"
 }

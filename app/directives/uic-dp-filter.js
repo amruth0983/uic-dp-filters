@@ -1,17 +1,18 @@
-var angular = require('../lib/angular/angular.min.js');
+// if(window.angular === undefined) {
+//   var angular = require('angular');
+// }
 
 angular
 .module('uic-dp-filter')
-.directive('uicDPFilter', function() {
+.directive('uicDpFilter', function() {
   return {
     scope: {
       config: '=?'
     },
-    template: require('../templates/uic-dp-filter.html'),
+    template: require('../templates/uicdpfiltertmpl.html'),
     restrict: 'AE',
     replace: true,
     link: function(scope, element) {
-      console.log('hai');
       scope.$on('$destroy', function() {
         element.empty();
       });

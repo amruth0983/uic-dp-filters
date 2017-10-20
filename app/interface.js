@@ -1,9 +1,8 @@
 var Component = require('ui-component'),
-  _ = require('lodash'),
-  angular = require('angular');
+  _ = require('lodash');
 
 require('./component.js');
-require('./css/style.css');
+require('./css/styles.css');
 
 function UicDPFilter(config) {
   var _this = this;
@@ -38,7 +37,7 @@ function UicDPFilter(config) {
 UicDPFilter.prototype = _.create(Component.prototype, {});
 UicDPFilter.prototype.constructor = UicDPFilter;
 
-UicRowFilter.prototype.render = function() {
+UicDPFilter.prototype.render = function() {
   var rootElement;
 
   if (!this.isRendered) {

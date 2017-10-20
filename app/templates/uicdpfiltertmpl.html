@@ -1,0 +1,33 @@
+<div>
+<h1>Custom Reusable filters</h1>
+
+	<div class="mos-filter-section filter-container price">
+		<div class="filter-header pointer header-dark-background" ng-class="{'header-dark-background':field.openfilter}" ng-click="removeError(null);openFilterFunction(field)" style="">
+			<span class="filter-label text-uppercase text-ellipsis ng-hide" tooltip="Price" tooltip-placement="top" tooltip-popup-delay="1200" style="">Price</span> 
+			<span class="mos-ico icon icon-xs clear-filter-icon" ng-click="clearFilter(field,field.searchFieldValues,false,$event)" style=""></span> 
+			<span class="filter-label text-ellipsis text-uppercase" style="">0-2 $/yard</span> 
+			<span ng-class="{'mos-ico icon icon-xs collapse-icon-pos collapse-icon' : !field.openfilter, 'mos-ico icon icon-xs collapse-icon-pos expand-icon' : field.openfilter }" class="mos-ico icon icon-xs collapse-icon-pos expand-icon" style=""></span>
+		</div>
+		<div class="filter-element-container" description="Price" style="">
+			<div class="filter-list" ng-click="(filterObj.start === -1) || (filterObj.end === -1) || validate(field,field.searchFieldValues,true,filterObj)" style="">
+				<span class="mos-ico icon-xxs icon custom-checkbox selected-tag" ng-class="{'selected-tag' : filterObj.checked}"></span>
+				<span ng-if="((filterObj.end >= 0) || (filterObj.end === '')) &amp;&amp; (filterObj.start !== -1)">0 <span ng-if="filterObj.end !== ''">- 2</span> $/yard (1254)</span>
+			</div>
+			<div class="filter-list" ng-repeat="filterObj in field.searchFieldValues" ng-click="(filterObj.start === -1) || (filterObj.end === -1) || validate(field,field.searchFieldValues,true,filterObj)" style="">
+				<span class="mos-ico icon-xxs icon custom-checkbox selected-tag" ng-class="{'selected-tag' : filterObj.checked}"></span>
+				<span ng-if="((filterObj.end >= 0) || (filterObj.end === '')) &amp;&amp; (filterObj.start !== -1)">2 <span ng-if="filterObj.end !== ''">- 4</span> $/yard (1254)</span>
+			</div>
+			<div class="filter-list" ng-repeat="filterObj in field.searchFieldValues" ng-click="(filterObj.start === -1) || (filterObj.end === -1) || validate(field,field.searchFieldValues,true,filterObj)" style="">
+				<span class="mos-ico icon-xxs icon custom-checkbox selected-tag" ng-class="{'selected-tag' : filterObj.checked}"></span>
+				<span ng-if="((filterObj.end >= 0) || (filterObj.end === '')) &amp;&amp; (filterObj.start !== -1)">4 <span ng-if="filterObj.end !== ''">- 6</span> $/yard (1254)</span>
+			</div>
+			<div class="filter-buttons filter-elem-cont" style="">
+				<input class="price-start ng-touched" type="text" maxlength="7" placeholder="From $/yard" ng-model="start" ng-keypress="validateValue($event)" style=""> 
+				<input class="price-end" type="text" maxlength="7" placeholder="To $/yard" ng-model="end" ng-keypress="validateValue($event)"> 
+				<button type="button" class="mos-ico icon icon-md right-grey-arrw" ng-click="validate(field,field.searchFieldValues,false)"></button>
+			</div>
+		</div>
+		<div class="filter-buttons filter-elem-cont"><input class="width-start ng-touched" type="text" maxlength="4" placeholder="From " ng-model="start" ng-keypress="validateValue($event)" style=""> <input class="width-end" type="text" maxlength="4" placeholder="To " ng-model="end" ng-keypress="validateValue($event)"> <button type="button" class="mos-ico icon icon-md right-grey-arrw" ng-click="validate(field)"></button></div>
+	</div>
+
+</div>

@@ -1,4 +1,3 @@
-
 html, body {
 	font-size: 14px;
 	font-family: 'adihaus-regular';
@@ -7,4 +6,205 @@ html, body {
 	padding: 0;
 	margin: 0;
 	position: relative;
+}
+
+.icon {
+	background-image: url('icons/icons@2x.png');
+	background-size: 700px 12528px;
+	background-repeat: no-repeat;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.icon-md {
+    width: 35px;
+    height: 35px;
+}
+
+.icon-xs {
+    width: 12px;
+    height: 12px;
+}
+
+.icon-sm {
+    width: 23px;
+    height: 12px;
+}
+
+.filter-container {
+	width: 162px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	height: auto;
+	margin-top: 0;
+	font-size: 12px;
+}
+
+.filter-header {
+	max-height: 35px;
+	background: #d2d2d2;
+	line-height: 35px;
+	display: block;
+}
+
+.header-dark-background {
+    background: #a5a5a5;
+}
+
+.filter-list {
+	padding: 2px 0 0 5px;
+	background: #fff;
+}
+
+.filter-label {
+	padding-left: 10px;
+	width: 118px;
+	display: inline-block;
+	color: #1e1e1e;
+}
+
+.filter-elem-cont input {
+	width: 30%;
+	margin-right: 7px;
+	background-color: #d2d2d2;
+	padding-left: 3px;
+	border: none;
+}
+
+.filter-element-container {
+    margin-top: 5px;
+}
+
+.textbox-filter input {
+    width: 70%;
+}
+
+.filter-elem-cont button, .submit-composition {
+    width: 35px;
+}
+
+.filter-buttons {
+    display: inline-flex;
+    margin: 5px 0;
+    width: 100%;
+    padding: 5px;
+}
+
+.custom-checkbox{
+	background-position: -2px -3068px;
+	height: 12px;
+	width: 12px;
+}
+
+.text-muted {
+    padding: 5px;
+    font-style: italic;
+}
+
+.caret.customcaret {
+    right: 5px!important;
+}
+
+.customSpan {
+    background: #d2d2d2;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 46px;
+    padding: 5px 0!important;
+}
+.customSpan {
+    cursor: text;
+}
+
+.clear-filter-icon {
+    float: left;
+    top: 11px;
+    margin-left: 10px;
+    position: relative;
+}
+
+.filter-range {
+    width: 70%;
+    float: right;
+}
+
+.hybrid-filter-container input {
+    width: 40%;
+    margin: 0 0 0 7px;
+    height: 35px;
+    background-color: #d2d2d2;
+    padding-left: 3px;
+    border: none;
+}
+
+.composition-select {
+    width: 30%;
+    background-color: #d2d2d2;
+}
+
+.clear-filter-icon {
+	background-position: -360px -8824px;
+}
+
+.selected-tag {
+	background-position: -360px -8898px;
+}
+
+.right-grey-arrw {
+	background-position: -361px -8569px;
+	border: none;
+	outline: 0;
+}
+
+.right-grey-arrw:hover {
+	background-position: -399px -8569px;
+}
+
+.right-grey-arrw.active {
+	background-position: -400px -8566px;
+}
+
+.collapse-icon, .expand-icon{    
+    height: 12px;
+    width: 12px;
+    float: right;
+    top: 10px;
+    right: 10px;
+    position: relative;
+}
+
+.collapse-icon {
+	background-position: -360px -8968px;
+}
+
+.expand-icon {
+    background-position: -360px -9174px;
+}
+
+.add-icon {
+    background-position: 0 -4315px;
+    width: 16px;
+    height: 15px;
+    vertical-align: middle;
+}
+
+.add-remove-section {
+    width: 80%;
+}
+
+.add-section, .remove-section {
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.remove-compo-filter {
+    background-position: -1px -4650px;
+height: 7px;
+    width: 17px;
+    margin-top: 15px;
+}
+
+.pull-left {
+    float: left!important;
 }

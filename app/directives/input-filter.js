@@ -1,10 +1,10 @@
 (function() {
   "use strict";
 
-  angular.module('DesignPortal')
+  angular.module('uic-dp-filter')
   .directive('dpInputFilter', function(){
     return {
-      restrict:'E',
+      restrict:'A',
       scope:{
         'field': '=fieldvalue',
         'openFilter': '&openFilter',
@@ -300,7 +300,7 @@
           }
         });
       },
-      templateUrl:'components/mos/materials/search/apparel/partials/filtertmpl/dirinputtmpl.html'
+      template: require('../templates/dirinputtmpl.html')
     }
   })
 })();
