@@ -1,6 +1,6 @@
 {
   "name": "reusable-filters",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Reusable filters",
   "main": "app/interface.js",
   "dependencies": {

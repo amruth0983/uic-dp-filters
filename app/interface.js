@@ -1,6 +1,6 @@
-var Component = require('../node_modules/ui-component/dist/ui-component.min.js'),
-  _ = require('./lib/lodash.js'),
-  angular = require('../lib/angular/angular.min.js');
+var Component = require('ui-component'),
+  _ = require('lodash'),
+  angular = require('angular');
 
 require('./component.js');
 require('./css/style.css');
