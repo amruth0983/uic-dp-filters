@@ -4,7 +4,7 @@
   angular.module('DesignPortal')
   .directive('dpFromToFilter', function(){
     return {
-      restrict:'E',
+      restrict:'A',
       scope:{
         'field': '=fieldvalue',
         'openFilter': '&openFilter',
@@ -242,7 +242,7 @@
           }
         });
       },
-      templateUrl:'components/mos/materials/search/apparel/partials/filtertmpl/dirfromtotmpl.html'
+      tempalte:require('../templates/dirfromtotmpl.html')
     }
   })
 })();

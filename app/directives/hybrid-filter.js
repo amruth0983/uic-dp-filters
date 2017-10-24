@@ -1,10 +1,10 @@
 (function() {
   "use strict";
 
-  angular.module('DesignPortal')
+  angular.module('uic-dp-filter')
   .directive('dpHybridFilter', function(){
     return {
-      restrict:'E',
+      restrict:'A',
       scope:{
         'field': '=fieldvalue',
         'openFilter': '&openFilter',
@@ -289,7 +289,7 @@
           }
         });
       },
-      templateUrl:'components/mos/materials/search/apparel/partials/filtertmpl/dirhybridtmpl.html'
+      tempalte:require('../templates/dirhybridtmpl.html')
     }
   });
 

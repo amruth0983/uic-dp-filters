@@ -4,7 +4,7 @@
   angular.module('DesignPortal')
   .directive('dpDropdownFilter', function(){
     return {
-      restrict:'E',
+      restrict:'A',
       scope:{
         'field': '=fieldvalue',
         'openFilter': '&openFilter',
@@ -100,7 +100,7 @@
           }
         });
       },
-      templateUrl:'components/mos/materials/search/apparel/partials/filtertmpl/dirdropdowntmpl.html'
+      tempalte:require('../templates/dirdropdowntmpl.html')
     }
   })
 })();

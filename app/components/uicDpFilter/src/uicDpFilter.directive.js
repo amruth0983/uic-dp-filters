@@ -3,13 +3,15 @@
 // }
 
 angular
-.module('uic-dp-filter')
+.module('uic-filter')
 .directive('uicDpFilter', function() {
   return {
+    controller: 'uiDpFilterController',
+    controllerAs: 'uiDpFilterCtrl',
     scope: {
       config: '=?'
     },
-    template: require('../templates/uicdpfiltertmpl.html'),
+    template: require('../../../templates/uicdpfiltertmpl.html'),
     restrict: 'AE',
     replace: true,
     link: function(scope, element) {

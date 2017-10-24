@@ -31,13 +31,22 @@ html, body {
     height: 12px;
 }
 
-.filter-container {
+.reusable-filters-section .filter-container {
 	width: 162px;
 	margin-bottom: 10px;
 	border: 1px solid #ccc;
 	height: auto;
 	margin-top: 0;
 	font-size: 12px;
+}
+
+.reusable-filters-section .selectize-control>.selectize-dropdown{
+	width: 209px !important;
+	left: 21px !important;
+}
+
+.reusable-filters-section .selectize-control>.selectize-input>input {
+	background-color: #d2d2d2 !important;
 }
 
 .filter-header {

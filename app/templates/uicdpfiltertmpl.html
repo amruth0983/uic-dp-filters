@@ -1,7 +1,84 @@
-<div>
-<h1>Custom Reusable filters</h1>
+<div class="reusable-filters-section">
+<span class="size-14 text-uppercase">Filters</h1>
+<hr class="filter-hr" />
+<ui-select ng-model="uiDpFilterCtrl.filterType" theme="selectize" class="filter-input text-uppercase filter-input name-input ui-select-multiple">
+    <ui-select-match allow-clear="true" placeholder="Select Filter Type" ng-click="pvm.cleanValue()">{{$select.selected}}</ui-select-match>
+    <ui-select-choices repeat="type in uiDpFilterCtrl.filterTypesList" refresh-delay="200">
+        <div>{{type}}</div>
+    </ui-select-choices>
+</ui-select>
 
-	<div class="mos-filter-section filter-container price">
+<ui-select multiple theme="bootstrap" class="filter-input text-uppercase unique-size push-down-15 name-input" ng-model="uiDpFilterCtrl.filterObj" ng-change="validate()" reset-search-input="true" ng-click="uiDpFilterCtrl.retrieveFiltersBasedOnType(uiDpFilterCtrl.filterType, $event)" append-to-body="{{field.appendtobody}}" ng-if="uiDpFilterCtrl.filterType">
+		<ui-select-match allow-clear="true" placeholder="select {{uiDpFilterCtrl.filterType}} filters">
+			{{$item.description}}
+		</ui-select-match>
+		<ui-select-choices repeat="filter in uiDpFilterCtrl.filtersArr | filter: $select.search track by $index"  class="set-max-height">
+			<div class = "filteritem">
+					{{filter.description}}
+				</div>
+		</ui-select-choices>
+</ui-select>
+<div class="filter-search-container push-down-10" ng-repeat="item in uiDpFilterCtrl.filterObj" ng-if="!filter.openfilter">
+	<div class="pull-left filter-criteria-text">
+		<span>{{item.description}}</span>
+	</div>
+	<div class="pull-right icon delete-icon" ng-click="uiDpFilterCtrl.removeSelectedFilterItem($index, item)">
+	</div>
+</div>
+<div class="filters-list push-down-15">
+	<div class="filter-item" ng-repeat="filter in uiDpFilterCtrl.filterObj">
+		<dp-hybrid-filter fieldvalue='filter'
+											open-filter="uiDpFilterCtrl.expandAddonFilter(filter)"
+											ng-if="filter.type =='hybrid'"
+											search-params="uiDpFilterCtrl.searchParams"
+											set-query-params="uiDpFilterCtrl.compositionSearch(params,isClear,type)">
+		</dp-hybrid-filter>
+		<dp-input-filter fieldvalue='filter'
+										 open-filter="uiDpFilterCtrl.expandAddonFilter(filter)"
+										 ng-if="filter.type=='range'"
+										 search-params="msvm.searchParams"
+										 set-query-params="uiDpFilterCtrl.setQueryParams(param,isClear)">
+		</dp-input-filter>
+		<dp-dropdown-filter fieldvalue='filter'
+												open-filter="uiDpFilterCtrl.expandAddonFilter(filter)"
+												ng-if="filter.type=='dropdown' && filter.multiple != true"
+												search-params="uiDpFilterCtrl.searchParams"
+												set-query-params="uiDpFilterCtrl.dropdownSearch(param,isClear)">
+		</dp-dropdown-filter>
+		<dp-multi-dropdown-filter fieldvalue='filter'
+															open-filter="uiDpFilterCtrl.expandAddonFilter(filter)"
+															ng-if="filter.type=='dropdown' && filter.multiple == true"
+															search-params="uiDpFilterCtrl.searchParams"
+															set-query-params="uiDpFilterCtrl.multiDropdownSearch(params,isClear)">
+		</dp-multi-dropdown-filter>
+		<dp-checkbox-filter fieldvalue='filter'
+												open-filter="uiDpFilterCtrl.expandAddonFilter(filter)"
+												ng-if="filter.type=='checkbox'"
+												search-params="uiDpFilterCtrl.searchParams"
+												set-query-params="uiDpFilterCtrl.checkboxSearch(param,isClear)">
+		</dp-checkbox-filter>
+		<dp-from-to-filter fieldvalue='filter'
+											 open-filter="uiDpFilterCtrl.expandAddonFilter(filter)"
+											 ng-if="filter.type=='fromto'"
+											 search-params="uiDpFilterCtrl.searchParams"
+											 set-query-params="uiDpFilterCtrl.fromtoSearch(param,isClear)">
+		</dp-from-to-filter>
+		<dp-conditional-from-to-filter fieldvalue='filter'
+																	 open-filter="uiDpFilterCtrl.expandAddonFilter(filter)"
+																	 ng-if="filter.type=='conditionalfromto'"
+																	 search-params="uiDpFilterCtrl.searchParams"
+																	 current-state-params="uiDpFilterCtrl.currentStateParams"
+																	 set-query-params="uiDpFilterCtrl.conditionalFromtoSearch(params,isClear,type)">
+		</dp-conditional-from-to-filter>
+		<dp-textbox-filter fieldvalue='filter'
+											 open-filter="uiDpFilterCtrl.expandAddonFilter(filter)"
+											 ng-if="filter.type=='textbox'"
+											 search-params="uiDpFilterCtrl.searchParams"
+											 set-query-params="uiDpFilterCtrl.textboxSearch(param,isClear)">
+		</dp-textbox-filter>
+	</div>
+</div>
+	<!-- <div class="mos-filter-section filter-container price">
 		<div class="filter-header pointer header-dark-background" ng-class="{'header-dark-background':field.openfilter}" ng-click="removeError(null);openFilterFunction(field)" style="">
 			<span class="filter-label text-uppercase text-ellipsis ng-hide" tooltip="Price" tooltip-placement="top" tooltip-popup-delay="1200" style="">Price</span> 
 			<span class="mos-ico icon icon-xs clear-filter-icon" ng-click="clearFilter(field,field.searchFieldValues,false,$event)" style=""></span> 
@@ -30,4 +107,4 @@
 		<div class="filter-buttons filter-elem-cont"><input class="width-start ng-touched" type="text" maxlength="4" placeholder="From " ng-model="start" ng-keypress="validateValue($event)" style=""> <input class="width-end" type="text" maxlength="4" placeholder="To " ng-model="end" ng-keypress="validateValue($event)"> <button type="button" class="mos-ico icon icon-md right-grey-arrw" ng-click="validate(field)"></button></div>
 	</div>
 
-</div>
+</div> -->

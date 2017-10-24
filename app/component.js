@@ -1,11 +1,10 @@
-// if(window.angular === undefined) {
-// 	var angular = require('angular');
-// }
 
 require('jquery');
 require('ui-component');
 
-angular.module('uic-dp-filter', []);
+require('./components/uicDpFilter/uicDpFilter');
 
+angular.module('uic-dp-filter', ['uic-filter']);
+
+require('./directives/hybrid-filter.js');
 require('./directives/input-filter.js');
-require('./directives/uic-dp-filter.js');
