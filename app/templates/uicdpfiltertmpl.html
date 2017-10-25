@@ -18,13 +18,13 @@
 				</div>
 		</ui-select-choices>
 </ui-select>
-<div class="filter-search-container push-down-10" ng-repeat="item in uiDpFilterCtrl.filterObj" ng-if="!filter.openfilter">
+<!-- <div class="filter-search-container push-down-10" ng-repeat="item in uiDpFilterCtrl.filterObj" ng-if="!filter.openfilter">
 	<div class="pull-left filter-criteria-text">
 		<span>{{item.description}}</span>
 	</div>
 	<div class="pull-right icon delete-icon" ng-click="uiDpFilterCtrl.removeSelectedFilterItem($index, item)">
 	</div>
-</div>
+</div> -->
 <div class="filters-list push-down-15">
 	<div class="filter-item" ng-repeat="filter in uiDpFilterCtrl.filterObj">
 		<dp-hybrid-filter fieldvalue='filter'

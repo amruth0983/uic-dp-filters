@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  angular.module('DesignPortal')
+  angular.module('uic-dp-filter')
   .directive('dpDropdownFilter', function(){
     return {
       restrict:'A',

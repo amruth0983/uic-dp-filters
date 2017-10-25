@@ -9,8 +9,12 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 	_this.filterLabelParam = [];
 	_this.filterTypesList = ['hybrid', 'range', 'fromto', 'dropdown', 'checkbox', 'textbox'];
 	_this.configObj = $scope.config;
-	_this.currentStateParams = {};
+	_this.currentStateParams = (_this.configObj) ? _this.configObj.routeParams : {};
+	_this.filterServiceName = (_this.configObj) ? _this.configObj.serviceName : '';
 
+	if(_this.configObj.availableFilters) {
+		//_this.filterObj = _this.configObj.availableFilters;
+	}
 
 	function retrieveFiltersBasedOnType(type, $event) {
 		if (angular.isUndefined($event) || $event.target.nodeName !== 'INPUT') {
@@ -18,7 +22,6 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 		}
 		var filtersList = _this.configObj.data,i;
 		_this.filtersArr = [];
-		console.log(type);
 
 			for(i = 0; i<filtersList.length; i++) {
 				if(type === filtersList[i].type) {
@@ -92,6 +95,112 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 		} else {
 			removeFilters(type, params.start, params.end, params.technology, 'true');
 		}
+	}
+
+	function dropdownSearch(param, isClear) {
+		var i, len = param.length;
+		for (i = 0; i < _this.filterLabelParam.length; i++) {
+			if (_this.filterLabelParam[i]['field'] == param.type) {
+				_this.filterLabelParam.splice(i, 1);
+				i--;
+			}
+		}
+		var localCompObj = {};
+		localCompObj.field = param.type;
+		localCompObj.technology = param.selected;
+		_this.filterLabelParam.push(localCompObj);
+		_this.currentStateParams[param.type.toLowerCase()] = param.selected;
+		if (isClear) {
+			removeFilters(param.type, param.start, param.end, param.technology, 'true');
+		}
+		else{ search(); }
+	}
+
+	function multiDropdownSearch(params, isClear) {
+		var i;
+		for (i = 0; i < _this.filterLabelParam.length; i++) {
+			if (_this.filterLabelParam[i]['field'] == params.type) {
+				_this.filterLabelParam.splice(i, 1);
+				i--;
+			}
+		}
+		var len = params.selected.length;
+		if(len > 0 && params.selected[0] !== ''){
+			_this.currentStateParams[params.type.toLowerCase()] = [];
+			for (i = 0; i < len; i++) {
+				var localCompObj = {};
+				localCompObj.technology = params.selected[i];
+				localCompObj.field = params.type;
+				localCompObj.type = params.type;
+				_this.filterLabelParam.push(localCompObj);
+				_this.currentStateParams[params.type.toLowerCase()].push(params.selected[i]);
+			}
+		}
+		else{
+			delete _this.currentStateParams[params.type.toLowerCase()];
+		}
+		if (isClear) {
+			removeFilters(params.type, params.start, params.end, params.technology, 'true');
+		}
+		else{
+			search();
+		}
+	}
+
+	function checkboxSearch(param, isClear) {
+		if (!isClear) {
+			var i, len = param.length;
+			for (i = 0; i < _this.filterLabelParam.length; i++) {
+				if (_this.filterLabelParam[i]['field'] == param.type) {
+					_this.filterLabelParam.splice(i, 1);
+					i--;
+				}
+			}
+			if (_this.currentStateParams[param.type] && (_this.currentStateParams[param.type] === param.selected)) {
+				delete _this.currentStateParams[param.type];
+				removeFilters(param.type, param.start, param.end, param.selected, 'true');
+			} else {
+				var localObject = {};
+				localObject.field = param.type;
+				localObject.technology = param.selected;
+				_this.filterLabelParam.push(localObject);
+				_this.currentStateParams[param.type] = param.selected;
+			}
+			if(param.type === 'isag') {
+				localStorage.setItem('isag', param.selected);
+			}
+			search();
+		} else {
+			if(param.type === 'isag') {
+				localStorage.removeItem('isag');
+			}
+			removeFilters(param.type, param.start, param.end, param.selected, 'true');
+		}
+	}
+
+	function fromtoSearch(param, isClear) {
+		setQueryParams(param, isClear);
+	}
+
+	function textboxSearch(param, isClear) {
+		var queryParam = {}, iterator = 0;
+		_this.currentStateParams[param.field] = param.start;
+		for (var i = 0; i < _this.filterLabelParam.length; i++) {
+			if (_this.filterLabelParam[i].field === param.field) {
+				_this.filterLabelParam[i].technology = param.start;
+				break;
+			}
+			iterator++;
+		}
+		if ((iterator === _this.filterLabelParam.length) || _this.filterLabelParam.length === 0) {
+			queryParam.field = param.field;
+			queryParam.technology = _this.currentStateParams[param.field];
+			_this.filterLabelParam.push(queryParam);
+		}
+		if (isClear) {
+			removeFilters(param.field, param.start, param.end, param.start, 'true');
+		}
+		else { search(); }
 	}
 
 	function selectFilter(field, start, end, technology, controlType, placeholder) {
@@ -174,40 +283,40 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 		filterServiceName.getFilters(suggestParams).then(function (data) {
 			field.loading = _this.filterloading = false;
 			if (data.p_err_code === "success") {
-				// if(_this.currentStateParams.hasOwnProperty(field.field) && field.type === 'dropdown') {
-				// 	//Remove already selected value from the filter suggest dropdown.
-				// 	data.data = data.data.filter(function(filtervalue) {
-				// 		if(field.multiple) {
-				// 			return (_this.currentStateParams[field.field].indexOf(filtervalue.name) === -1);
-				// 		} else {
-				// 			return (filtervalue.name !== _this.currentStateParams[field.field]);
-				// 		}
-				// 	});
-				// }
+				if(_this.currentStateParams.hasOwnProperty(field.field) && field.type === 'dropdown') {
+					//Remove already selected value from the filter suggest dropdown.
+					data.data = data.data.filter(function(filtervalue) {
+						if(field.multiple) {
+							return (_this.currentStateParams[field.field].indexOf(filtervalue.name) === -1);
+						} else {
+							return (filtervalue.name !== _this.currentStateParams[field.field]);
+						}
+					});
+				}
 				field.searchFieldValues = data.data;
 				setSelectedFilter(field);
 			}
 			// Focus in the input fields as soon as the BE suggest data is received.
-			// if(field.type === 'dropdown') {
-			// 	if(field.multiple) {
-			// 		angular.element('.'+field.field+ '.mos-filter-section input')[0].focus();
-			// 		var uiSelect = angular.element('.'+field.field+ ' .ui-select-container').controller('uiSelect');
-			// 		if(angular.isDefined(uiSelect)) {
-			// 			uiSelect.activate();
-			// 		}
-			// 	} else {
-			// 		var uiSelect = angular.element('.'+field.field+ ' .ui-select-container').controller('uiSelect');
-			// 		$timeout(function() {
-			// 			angular.element("."+field.field+ " .ui-select-container input[ng-model='$select.search']")[0].focus();
-			// 		});
-			// 		uiSelect.open = true;
-			// 		uiSelect.activate();
-			// 	}
-			// } else if(field.type !== 'checkbox') {
-			// 	$timeout(function() {
-			// 		angular.element('.'+field.field+ '.mos-filter-section input.'+field.field+'-start')[0].focus();
-			// 	});
-			// }
+			if(field.type === 'dropdown') {
+				if(field.multiple) {
+					angular.element('.'+field.field+ '.mos-filter-section input')[0].focus();
+					var uiSelect = angular.element('.'+field.field+ ' .ui-select-container').controller('uiSelect');
+					if(angular.isDefined(uiSelect)) {
+						uiSelect.activate();
+					}
+				} else {
+					var uiSelect = angular.element('.'+field.field+ ' .ui-select-container').controller('uiSelect');
+					$timeout(function() {
+						angular.element("."+field.field+ " .ui-select-container input[ng-model='$select.search']")[0].focus();
+					});
+					uiSelect.open = true;
+					uiSelect.activate();
+				}
+			} else if(field.type !== 'checkbox') {
+				$timeout(function() {
+					angular.element('.'+field.field+ '.mos-filter-section input.'+field.field+'-start')[0].focus();
+				});
+			}
 		}, function (errData) {
 			var err = errData;
 			field.loading = _this.filterloading = false;
@@ -244,7 +353,11 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 	}
 
 	function search() {
-		console.log('came here');
+		var searchparams = {
+			currentParams: _this.currentStateParams,
+			filterParams: _this.filterLabelParam
+		}
+		$scope.$emit("uicDPFilterResultData", searchparams);
 	}
 
 	function removeSelectedFilterItem(index, value) {
@@ -256,6 +369,11 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 	_this.setQueryParams = setQueryParams;
 	_this.removeSelectedFilterItem = removeSelectedFilterItem;
 	_this.compositionSearch = compositionSearch;
+	_this.textboxSearch = textboxSearch;
+	_this.multiDropdownSearch = multiDropdownSearch;
+	_this.fromtoSearch = fromtoSearch;
+	_this.checkboxSearch = checkboxSearch;
+	_this.dropdownSearch = dropdownSearch;
 }
 
 uiDpFilterController.$inject=['$scope', '$templateCache', '$timeout'];

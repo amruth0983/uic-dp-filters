@@ -1,10 +1,10 @@
 (function() {
   "use strict";
 
-  angular.module('DesignPortal')
+  angular.module('uic-dp-filter')
   .directive('dpTextboxFilter', function(){
     return {
-      restrict:'E',
+      restrict:'A',
       scope:{
         'field': '=fieldvalue',
         'openFilter': '&openFilter',
@@ -208,7 +208,7 @@
           }
         });
       },
-      templateUrl:'components/mos/materials/search/apparel/partials/filtertmpl/dirtextboxtmpl.html'
+      tempalte:require('../templates/dirtextboxtmpl.html')
     }
   })
 })();

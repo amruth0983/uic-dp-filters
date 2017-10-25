@@ -49,6 +49,11 @@ html, body {
 	background-color: #d2d2d2 !important;
 }
 
+.reusable-filters-section .selectize-dropdown .ui-select-choices-row>div:hover {
+    background-color: #646464!important;
+    color: #fff!important;
+}
+
 .filter-header {
 	max-height: 35px;
 	background: #d2d2d2;
