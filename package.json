@@ -11,16 +11,28 @@
         "type": "tag"
       },
       "E:\\DPBackend1\\src\\main\\webapp\\ngapp"
+    ],
+    [
+      {
+        "raw": "reusable-filters@1.0.5",
+        "scope": null,
+        "escapedName": "reusable-filters",
+        "name": "reusable-filters",
+        "rawSpec": "1.0.5",
+        "spec": "1.0.5",
+        "type": "version"
+      },
+      "E:\\DPBackend1\\src\\main\\webapp\\ngapp"
     ]
   ],
-  "_from": "reusable-filters@latest",
-  "_id": "reusable-filters@1.0.3",
+  "_from": "reusable-filters@1.0.5",
+  "_id": "reusable-filters@1.0.5",
   "_inCache": true,
   "_location": "/reusable-filters",
   "_nodeVersion": "7.10.0",
   "_npmOperationalInternal": {
     "host": "s3://npm-registry-packages",
-    "tmp": "tmp/reusable-filters-1.0.3.tgz_1508468822177_0.4168872020673007"
+    "tmp": "tmp/reusable-filters-1.0.5.tgz_1508928780516_0.9905469315126538"
   },
   "_npmUser": {
     "name": "amruth0983",
@@ -29,21 +41,21 @@
   "_npmVersion": "4.2.0",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "reusable-filters",
+    "raw": "reusable-filters@1.0.5",
     "scope": null,
     "escapedName": "reusable-filters",
     "name": "reusable-filters",
-    "rawSpec": "",
-    "spec": "latest",
-    "type": "tag"
+    "rawSpec": "1.0.5",
+    "spec": "1.0.5",
+    "type": "version"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "https://registry.npmjs.org/reusable-filters/-/reusable-filters-1.0.3.tgz",
-  "_shasum": "a533a7457fee8bb9ecaadd8cf560ab284b991ce5",
+  "_resolved": "https://registry.npmjs.org/reusable-filters/-/reusable-filters-1.0.5.tgz",
+  "_shasum": "e6d9227aa76535e131d33e731a2b93bb205ca757",
   "_shrinkwrap": null,
-  "_spec": "reusable-filters",
+  "_spec": "reusable-filters@1.0.5",
   "_where": "E:\\DPBackend1\\src\\main\\webapp\\ngapp",
   "author": {
     "name": "“Amruth”",
@@ -63,8 +75,8 @@
   "devDependencies": {},
   "directories": {},
   "dist": {
-    "shasum": "a533a7457fee8bb9ecaadd8cf560ab284b991ce5",
-    "tarball": "https://registry.npmjs.org/reusable-filters/-/reusable-filters-1.0.3.tgz"
+    "shasum": "e6d9227aa76535e131d33e731a2b93bb205ca757",
+    "tarball": "https://registry.npmjs.org/reusable-filters/-/reusable-filters-1.0.5.tgz"
   },
   "gitHead": "a4c6ff05aca6c8a3a072cccc645212eb1e1fa6a4",
   "homepage": "https://github.com/amruth0983/reusable-filters#readme",

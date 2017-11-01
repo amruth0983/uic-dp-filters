@@ -1,0 +1,135 @@
+@import "icons.scss";
+
+html, body {
+	font-size: 14px;
+	font-family: 'adihaus-regular';
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+
+.reusable-filters-section {
+	.filter-container {
+		width: 162px;
+		margin-bottom: 10px;
+		border: 1px solid #ccc;
+		height: auto;
+		margin-top: 0;
+		font-size: 12px;
+		.filter-header {
+			max-height: 35px;
+			background: #d2d2d2;
+			line-height: 35px;
+			display: block;
+			.filter-label {
+				padding-left: 10px;
+				width: 118px;
+				display: inline-block;
+				color: #1e1e1e;
+			}
+			&.header-dark-background {
+			background: #a5a5a5;
+			}
+		}
+		.filter-elem-cont input {
+			width: 30%;
+			margin-right: 7px;
+			background-color: #d2d2d2;
+			padding-left: 3px;
+			border: none;
+		}
+		.filter-element-container {
+			margin-top: 5px;
+			.filter-list {
+			padding: 2px 0 0 5px;
+			background: #fff;
+			}
+		}
+	}
+	.selectize-control > {
+		.selectize-dropdown {
+			width: 209px !important;
+			left: 21px !important;
+		}
+		.selectize-input > input {
+			background-color: #d2d2d2 !important;
+		}
+	}
+	.selectize-dropdown .ui-select-choices-row > div:hover {
+		background-color: #646464 !important;
+		color: #fff !important;
+	}
+	
+	.textbox-filter input {
+		width: 70%;
+	}
+
+	.filter-elem-cont button, .submit-composition {
+		width: 35px;
+	}
+
+	.filter-buttons {
+		display: inline-flex;
+		margin: 5px 0;
+		width: 100%;
+		padding: 5px;
+	}
+	.text-muted {
+		padding: 5px;
+		font-style: italic;
+	}
+	.caret.customcaret {
+		right: 5px !important;
+	}
+	.customSpan {
+		background: #d2d2d2;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		width: 46px;
+		padding: 5px 0 !important;
+		cursor: text;
+	}
+	.clear-filter-icon {
+		float: left;
+		top: 11px;
+		margin-left: 10px;
+		position: relative;
+	}
+	.filter-range {
+		width: 70%;
+		float: right;
+	}
+	.hybrid-filter-container input {
+		width: 40%;
+		margin: 0 0 0 7px;
+		height: 35px;
+		background-color: #d2d2d2;
+		padding-left: 3px;
+		border: none;
+	}
+	.composition-select {
+		width: 30%;
+		background-color: #d2d2d2;
+	}
+	.collapse-icon, .expand-icon {
+		height: 12px;
+		width: 12px;
+		float: right;
+		top: 10px;
+		right: 10px;
+		position: relative;
+	}
+	.add-remove-section {
+		width: 80%;
+	}
+	.add-section, .remove-section {
+		display: inline-block;
+		margin-top: 8px;
+	}
+	.pull-left {
+		float: left !important;
+	}
+}

@@ -2,7 +2,7 @@ var Component = require('ui-component'),
   _ = require('lodash');
 
 require('./component.js');
-require('./css/styles.css');
+require('./css/styles.scss');
 
 function UicDPFilter(config) {
   var _this = this;

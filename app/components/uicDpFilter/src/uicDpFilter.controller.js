@@ -5,15 +5,48 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 	var _this = this;
 	_this.filtersArr = [];
 	_this.filterType = null;
-	_this.filterObj = null;
+	_this.filterObj = [];
+	_this.filterVal = '';
 	_this.filterLabelParam = [];
 	_this.filterTypesList = ['hybrid', 'range', 'fromto', 'dropdown', 'checkbox', 'textbox'];
 	_this.configObj = $scope.config;
 	_this.currentStateParams = (_this.configObj) ? _this.configObj.routeParams : {};
 	_this.filterServiceName = (_this.configObj) ? _this.configObj.serviceName : '';
 
-	if(_this.configObj.availableFilters) {
-		//_this.filterObj = _this.configObj.availableFilters;
+	if(_this.configObj.availableFilters && _this.configObj.availableFilters.length > 0) {
+		var selectedField = [],
+		 i, j, k;
+		 for(j=0; j< _this.configObj.availableFilters[0].length; j++) {
+		 	selectedField.push(_this.configObj.availableFilters[0][j].fieldType);
+		 }
+		_this.filterObj = [];
+		for(k=0; k< selectedField.length; k++) {
+			for(i=0; i< _this.configObj.data.length; i++) {
+				if(_this.configObj.data[i].field === selectedField[k]) {
+					_this.filterObj.push(_this.configObj.data[i]);
+					_this.filterType = _this.configObj.data[i].type;
+					break;
+				}
+			}
+		}
+		_this.searchParams = _this.configObj.availableFilters;
+		_this.filterLabelParam = _this.configObj.filterLabelParam;
+	}
+
+	function pushValues(field, start, end, technology, placeholder) {
+		//Function only pushes the values to the filterParams. Reduces code redundancy
+		var currentFilterParam = {};
+		currentFilterParam.field = field;
+		currentFilterParam.start = start;
+		currentFilterParam.end = end;
+		currentFilterParam.placeholder = placeholder || '';
+		if (technology) {
+			currentFilterParam.technology = technology;
+		} else {
+			currentFilterParam.technology = '';
+		}
+		_this.filterLabelParam.push(currentFilterParam);
+		_this.currentStateParams[field.toLowerCase()] = start + ':' + end;
 	}
 
 	function retrieveFiltersBasedOnType(type, $event) {
@@ -28,6 +61,16 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 					_this.filtersArr.push(filtersList[i]);
 				}
 			}
+	}
+
+	function setFilterInfo() {
+		if(_this.filterVal && _this.filterVal.length > 0)
+		_this.filterObj.push(_this.filterVal[0]);
+	}
+
+	function setFilterPlaceHolderDescription() {
+		setFilterInfo();
+		_this.filterVal = '';
 	}
 
 	function showHideFilters(field, hideAll) {
@@ -353,15 +396,43 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 	}
 
 	function search() {
-		var searchparams = {
+		var searchParams = {
 			currentParams: _this.currentStateParams,
 			filterParams: _this.filterLabelParam
 		}
-		$scope.$emit("uicDPFilterResultData", searchparams);
+		$scope.$emit("uicDPFilterResultData", searchParams);
+	}
+
+	function removeFilters(field, start, end, technology, remove, controlType) {
+		if(_this.filterLabelParam.length > 0) {
+			var searchParams = {
+				field: field,
+				start: start,
+				end: end,
+				technology: technology,
+				remov: remove,
+				controlType: controlType
+			}
+			$scope.$emit("uicDPRemoveFilterResultData", searchParams);
+		}
 	}
 
 	function removeSelectedFilterItem(index, value) {
 		_this.filterObj.splice(index, 1);
+		if(_this.filterLabelParam.length > 0) {
+			var removedObj = {
+				field: value.field,
+				clearAll: true
+			}
+			if(angular.isDefined(_this.searchParams)) {
+				for(var i=0; i< _this.searchParams[0].length; i++) {
+					if(_this.searchParams[0][i].fieldType === removedObj.field) {
+						_this.searchParams[0].splice(i,1);
+					}
+				}
+			}
+			$scope.$broadcast("unCheckFilter", removedObj);
+		}
 	}
 
 	_this.retrieveFiltersBasedOnType = retrieveFiltersBasedOnType;
@@ -374,6 +445,8 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 	_this.fromtoSearch = fromtoSearch;
 	_this.checkboxSearch = checkboxSearch;
 	_this.dropdownSearch = dropdownSearch;
+	_this.setFilterPlaceHolderDescription = setFilterPlaceHolderDescription;
+	_this.removeFilters = removeFilters;
 }
 
 uiDpFilterController.$inject=['$scope', '$templateCache', '$timeout'];

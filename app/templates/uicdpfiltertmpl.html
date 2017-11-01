@@ -8,9 +8,9 @@
     </ui-select-choices>
 </ui-select>
 
-<ui-select multiple theme="bootstrap" class="filter-input text-uppercase unique-size push-down-15 name-input" ng-model="uiDpFilterCtrl.filterObj" ng-change="validate()" reset-search-input="true" ng-click="uiDpFilterCtrl.retrieveFiltersBasedOnType(uiDpFilterCtrl.filterType, $event)" append-to-body="{{field.appendtobody}}" ng-if="uiDpFilterCtrl.filterType">
+<ui-select multiple theme="bootstrap" class="filter-input text-uppercase unique-size push-down-15 name-input" ng-model="uiDpFilterCtrl.filterVal" ng-change="uiDpFilterCtrl.setFilterPlaceHolderDescription()" reset-search-input="true" ng-click="uiDpFilterCtrl.retrieveFiltersBasedOnType(uiDpFilterCtrl.filterType, $event)" ng-if="uiDpFilterCtrl.filterType">
 		<ui-select-match allow-clear="true" placeholder="select {{uiDpFilterCtrl.filterType}} filters">
-			{{$item.description}}
+			{{$item}}
 		</ui-select-match>
 		<ui-select-choices repeat="filter in uiDpFilterCtrl.filtersArr | filter: $select.search track by $index"  class="set-max-height">
 			<div class = "filteritem">
@@ -18,13 +18,13 @@
 				</div>
 		</ui-select-choices>
 </ui-select>
-<!-- <div class="filter-search-container push-down-10" ng-repeat="item in uiDpFilterCtrl.filterObj" ng-if="!filter.openfilter">
+<div class="filter-search-container push-down-10" ng-repeat="item in uiDpFilterCtrl.filterObj" ng-if="!filter.openfilter">
 	<div class="pull-left filter-criteria-text">
 		<span>{{item.description}}</span>
 	</div>
 	<div class="pull-right icon delete-icon" ng-click="uiDpFilterCtrl.removeSelectedFilterItem($index, item)">
 	</div>
-</div> -->
+</div>
 <div class="filters-list push-down-15">
 	<div class="filter-item" ng-repeat="filter in uiDpFilterCtrl.filterObj">
 		<dp-hybrid-filter fieldvalue='filter'
@@ -36,7 +36,7 @@
 		<dp-input-filter fieldvalue='filter'
 										 open-filter="uiDpFilterCtrl.expandAddonFilter(filter)"
 										 ng-if="filter.type=='range'"
-										 search-params="msvm.searchParams"
+										 search-params="uiDpFilterCtrl.searchParams"
 										 set-query-params="uiDpFilterCtrl.setQueryParams(param,isClear)">
 		</dp-input-filter>
 		<dp-dropdown-filter fieldvalue='filter'

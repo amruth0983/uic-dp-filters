@@ -1,0 +1,54 @@
+.icon {
+  background-image: url('icons/icons@2x.png');
+  background-size: 700px 12528px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.icon-md {
+  width: 35px;
+  height: 35px;
+}
+
+.icon-xs {
+  width: 12px;
+  height: 12px;
+}
+
+.icon-sm {
+  width: 23px;
+  height: 12px;
+}
+
+.custom-checkbox {
+  background-position: -2px -3068px;
+  height: 12px;
+  width: 12px;
+}
+
+.clear-filter-icon {
+  background-position: -360px -8824px;
+}
+
+.selected-tag {
+  background-position: -360px -8898px;
+}
+
+.right-grey-arrw {
+  background-position: -361px -8569px;
+  border: none;
+  outline: 0;
+  &:hover {
+    background-position: -399px -8569px;
+  }
+  &.active {
+    background-position: -400px -8566px;
+  }
+}
+.remove-compo-filter {
+  background-position: -1px -4650px;
+  height: 7px;
+  width: 17px;
+  margin-top: 15px;
+}

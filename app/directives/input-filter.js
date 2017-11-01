@@ -1,7 +1,7 @@
-(function() {
+  (function() {
   "use strict";
 
-  angular.module('uic-dp-filter')
+  angular.module('uic-filter')
   .directive('dpInputFilter', function(){
     return {
       restrict:'A',
@@ -230,6 +230,7 @@
                 return false;  
               }
             }
+            console.log($scope.currentfilter);
           }
         });
 
@@ -298,6 +299,10 @@
           if(args.field == $scope.field.field && $scope.field.anyselected){
             $scope.clearFilter($scope.field,$scope.field.searchFieldValues,false);
           }
+        });
+        
+        scope.$on('setFilters', function(event,args){
+          
         });
       },
       template: require('../templates/dirinputtmpl.html')
