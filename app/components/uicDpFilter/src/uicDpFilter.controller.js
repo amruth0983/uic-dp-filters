@@ -1,23 +1,41 @@
 (function () {
 	'use strict';
 
-function uiDpFilterController($scope, $templateCache, $timeout) {
+function uiDpFilterController($scope, $templateCache, $timeout, $location) {
 	var _this = this;
 	_this.filtersArr = [];
 	_this.filterType = null;
 	_this.filterObj = [];
 	_this.filterVal = '';
 	_this.filterLabelParam = [];
+	_this.isPageRefreshed = true;
 	_this.filterTypesList = ['hybrid', 'range', 'fromto', 'dropdown', 'checkbox', 'textbox'];
 	_this.configObj = $scope.config;
 	_this.currentStateParams = (_this.configObj) ? _this.configObj.routeParams : {};
 	_this.filterServiceName = (_this.configObj) ? _this.configObj.serviceName : '';
+	_this.availableFilters = [];
 
-	if(_this.configObj.availableFilters && _this.configObj.availableFilters.length > 0) {
+
+	if(_this.isPageRefreshed) {
+		var filters = getFilterFromUrl();
+		if(_this.configObj.data && filters && filters.length > 0) {
+			var filtersSelected = {
+				filters: filters,
+				filterLabelParam : _this.filterLabelParam
+			}
+			$scope.$emit('filtersFromurl', filtersSelected);
+			_this.availableFilters.push(filters);
+			displayFiltersFromUrl(filters);
+		}
+		_this.isPageRefreshed = false;
+	}
+
+	function displayFiltersFromUrl(filters) {
+
 		var selectedField = [],
 		 i, j, k;
-		 for(j=0; j< _this.configObj.availableFilters[0].length; j++) {
-		 	selectedField.push(_this.configObj.availableFilters[0][j].fieldType);
+		 for(j=0; j< _this.availableFilters[0].length; j++) {
+		 	selectedField.push(_this.availableFilters[0][j].fieldType);
 		 }
 		_this.filterObj = [];
 		for(k=0; k< selectedField.length; k++) {
@@ -29,8 +47,7 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 				}
 			}
 		}
-		_this.searchParams = _this.configObj.availableFilters;
-		_this.filterLabelParam = _this.configObj.filterLabelParam;
+		_this.searchParams = _this.availableFilters;	
 	}
 
 	function pushValues(field, start, end, technology, placeholder) {
@@ -435,6 +452,252 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 		}
 	}
 
+	function getFilterFromUrl() {
+		var keys = $location.search();
+		var availableFilters = [],
+		filtersList = _this.configObj.data;
+
+		for (var i in filtersList) {
+			if (keys.hasOwnProperty(filtersList[i].field)) {
+				availableFilters.push({
+					key: filtersList[i].field,
+					value: keys[filtersList[i].field],
+					type: filtersList[i].type,
+					multiple: filtersList[i].multiple,
+					placeholder: filtersList[i].placeholder,
+					isChecked: keys['isChecked'] ? (keys['isChecked'] == 'true' ? true : false) : false
+				});
+				filtersList[i].selected = true;
+			}
+		}
+
+		if (keys.hasOwnProperty('id') && keys.hasOwnProperty('grouptype')) {
+			var localObject = {};
+			localObject.field = 'grouptype';
+			//localObject.technology = keys['grouptype'] + ' of ' + _this.materialData.material.name;
+			localObject.technology = keys['grouptype'] + ' of ' + keys['id'];
+			_this.filterLabelParam.push(localObject);
+		}
+		if (keys.hasOwnProperty('q') && keys['q'] != '*') {
+			availableFilters.push({
+				key: "q",
+				value: keys["q"],
+				type: "",
+				multiple: false,
+				placeholder: ''
+			});
+		}
+		if (keys.hasOwnProperty('keyword')) {
+			availableFilters.push({
+				key: "keyword",
+				value: keys["keyword"],
+				type: "",
+				multiple: false,
+				placeholder: ''
+			});
+		}
+		var filterbox = {
+			type: keys.type,
+			filters: availableFilters
+		}
+		var finalbox = [];
+		for (var i = 0; i < filterbox.filters.length; i++) {
+			var filterObj = {};
+			filterObj.fieldType = filterbox.filters[i].key;
+			if (filterbox.filters[i].type == 'range') {
+				filterObj.isChecked = filterbox.filters[i].isChecked;
+				filterObj.values = {
+					controlType: filterbox.filters[i].type,
+					end: filterbox.filters[i].value.split(':')[1] || '',
+					field: filterbox.filters[i].key,
+					isChecked: filterbox.filters[i].isChecked,
+					start: filterbox.filters[i].value.split(':')[1] == '*' ? 'above ' + (filterbox.filters[i].value.split(':')[0] || '') : (filterbox.filters[i].value.split(':')[0] || ''),
+					technology: ""
+				}
+				if (filterbox.filters[i].value.split(':')[1] == '*') {
+					filterObj.isChecked = true;
+				}
+			} else if (filterbox.filters[i].type == 'checkbox') {
+				filterObj.isChecked = true;
+				filterObj.values = {
+					field: filterbox.filters[i].key,
+					isChecked: true,
+					technology: filterbox.filters[i].value
+				}
+			} else if (filterbox.filters[i].type == 'textbox') {
+				filterObj.isChecked = false;
+				filterObj.values = {
+					field: filterbox.filters[i].key,
+					technology: filterbox.filters[i].value
+				}
+			} else if (filterbox.filters[i].type == 'fromto') {
+				filterObj.isChecked = false;
+				filterObj.values = {
+					controlType: filterbox.filters[i].type,
+					end: filterbox.filters[i].value.split(':')[1] || '',
+					field: filterbox.filters[i].key,
+					start: filterbox.filters[i].value.split(':')[0] || ''
+				}
+			} else if (filterbox.filters[i].type == 'dropdown' && filterbox.filters[i].multiple) {
+				filterObj.values = [];
+				if (Array.isArray(filterbox.filters[i].value)) {
+					var len = filterbox.filters[i].value.length;
+					_this.currentStateParams[filterbox.filters[i].key] = [];
+					for (j = 0; j < len; j++) {
+						var localCompObj = {};
+						localCompObj.technology = filterbox.filters[i].value[j];
+						localCompObj.field = filterbox.filters[i].key;
+						filterObj.values.push(localCompObj);
+
+						_this.filterLabelParam.push({
+							field: localCompObj.field || '',
+							start: localCompObj.start || '',
+							end: localCompObj.end || '',
+							technology: localCompObj.technology || '',
+							placeholder: filterbox.filters[i].placeholder,
+							type: localCompObj.field || ''
+						});
+						_this.currentStateParams[filterbox.filters[i].key].push(localCompObj.technology);
+					}
+				} else {
+					var localCompObj = {};
+					localCompObj.technology = filterbox.filters[i].value;
+					localCompObj.field = filterbox.filters[i].key;
+					filterObj.values.push(localCompObj);
+					_this.filterLabelParam.push({
+						field: localCompObj.field || '',
+						start: localCompObj.start || '',
+						end: localCompObj.end || '',
+						technology: localCompObj.technology || '',
+						placeholder: filterbox.filters[i].placeholder,
+						type: localCompObj.field || ''
+					});
+					_this.currentStateParams[localCompObj.field] = localCompObj.technology;
+				}
+			} else if (filterbox.filters[i].type == 'hybrid' || filterbox.filters[i].type == 'conditionalfromto') {
+				filterObj.values = [];
+				if (Array.isArray(filterbox.filters[i].value)) {
+					_this.currentStateParams[filterbox.filters[i].key] = [];
+					var len = filterbox.filters[i].value.length;
+					for (j = 0; j < len; j++) {
+						var localCompObj = {};
+						localCompObj.technology = filterbox.filters[i].value[j].split(':')[0];
+						localCompObj.field = filterbox.filters[i].key;
+						localCompObj.start = filterbox.filters[i].value[j].split(':')[1];
+						localCompObj.end = filterbox.filters[i].value[j].split(':')[2];
+						if(filterbox.filters[i].type == 'conditionalfromto'){
+							localCompObj.technology = filterbox.filters[i].value[j].split(':')[1];
+							localCompObj.start = filterbox.filters[i].value[j].split(':')[2];
+							localCompObj.end = filterbox.filters[i].value[j].split(':')[3];
+						}
+						filterObj.values.push(localCompObj);
+						_this.filterLabelParam.push({
+							field: localCompObj.field || '',
+							start: localCompObj.start || '',
+							end: localCompObj.end || '',
+							technology: localCompObj.technology || '',
+							placeholder: filterbox.filters[i].placeholder,
+							type: localCompObj.field
+						});
+						var compString = localCompObj.technology.toLowerCase() + ':' + localCompObj.start + ':' + localCompObj.end;
+						if(filterbox.filters[i].type == 'conditionalfromto'){
+							var trimtype = _this.currentStateParams['trimtype'].toLowerCase() !== 'zipper/ puller' && _this.currentStateParams['trimtype'].toLowerCase() !== 'tiecords' ? 'others' : _this.currentStateParams['trimtype'].toLowerCase();
+							compString = trimtype + ':' + localCompObj.technology.toLowerCase() + ':' + localCompObj.start + ':' + localCompObj.end;
+							_this.currentStateParams[localCompObj.field].push(compString.split(' ').join(''));
+						}
+						else{
+							_this.currentStateParams[localCompObj.field].push(compString);
+						}
+					}
+				} else {
+					var localCompObj = {};
+					localCompObj.technology = filterbox.filters[i].value.split(':')[0];
+					localCompObj.field = filterbox.filters[i].key;
+					localCompObj.start = filterbox.filters[i].value.split(':')[1];
+					localCompObj.end = filterbox.filters[i].value.split(':')[2];
+					if(filterbox.filters[i].type == 'conditionalfromto'){
+						localCompObj.technology = filterbox.filters[i].value.split(':')[1];
+						localCompObj.start = filterbox.filters[i].value.split(':')[2];
+						localCompObj.end = filterbox.filters[i].value.split(':')[3];
+					}
+					filterObj.values.push(localCompObj);
+
+					_this.filterLabelParam.push({
+						field: localCompObj.field || '',
+						start: localCompObj.start || '',
+						end: localCompObj.end || '',
+						technology: localCompObj.technology || '',
+						placeholder: filterbox.filters[i].placeholder,
+						type: localCompObj.field
+					});
+
+					if(filterbox.filters[i].type == 'conditionalfromto'){
+						var trimtype = _this.currentStateParams['trimtype'].toLowerCase() !== 'zipper/ puller' && _this.currentStateParams['trimtype'].toLowerCase() !== 'tiecords' ? 'others' : _this.currentStateParams['trimtype'].toLowerCase();
+						compString = trimtype + ':' + filterbox.filters[i].value.split(':')[1].toLowerCase() + ':' + localCompObj.start + ':' + localCompObj.end;
+						_this.currentStateParams[localCompObj.field] = compString.split(' ').join('');
+					}
+					else{
+						_this.currentStateParams[localCompObj.field] = filterbox.filters[i].value;
+					}
+				}
+			} else if (filterbox.filters[i].type == 'dropdown' && !filterbox.filters[i].multiple) {
+				filterObj.isChecked = false;
+				filterObj.values = {
+					field: filterbox.filters[i].key,
+					technology: filterbox.filters[i].value
+				}
+				_this.filterLabelParam.push({
+					field: filterObj.values.field || '',
+					start: filterObj.values.start || '',
+					end: filterObj.values.end || '',
+					technology: filterObj.values.technology || '',
+					placeholder: filterbox.filters[i].placeholder
+				});
+			}
+
+			if (filterbox.filters[i].type != 'hybrid' && filterbox.filters[i].type != 'conditionalfromto' && filterbox.filters[i].type != 'dropdown' && filterbox.filters[i].key != 'q' && filterbox.filters[i].key != 'keyword') {
+				var start = filterObj.values.start,
+						end = filterObj.values.end;
+				start = (start && start.indexOf(' ') !== -1) ? parseInt(start.substr(start.indexOf(' ') + 1, start.length)) : start;
+				_this.filterLabelParam.push({
+					field: filterObj.values.field || '',
+					start: start || '',
+					end: end || '',
+					technology: filterObj.values.technology || '',
+					placeholder: filterbox.filters[i].placeholder
+				});
+			}
+			if (filterbox.filters[i].key === 'q' || filterbox.filters[i].key === 'keyword' ) {
+				_this.filterLabelParam.push({
+					field: filterbox.filters[i].key || '',
+					technology: filterbox.filters[i].value || '',
+					placeholder: filterbox.filters[i].placeholder
+				});
+			}
+			finalbox.push(filterObj);
+		}
+		searchFilterCall();
+		return finalbox
+	}
+
+	function searchFilterCall() {
+		angular.forEach(_this.filterLabelParam, function (item) {
+			if (!item.type) {
+				if (item.end) {
+					_this.currentStateParams[item.field.toLowerCase()] = item.start + ':' + item.end;
+				} else if (!item.technology && item.start) {
+					_this.currentStateParams[item.field.toLowerCase()] = item.start + ':*';
+				} else if (item.technology && !item.start) {
+					_this.currentStateParams[item.field.toLowerCase()] = item.technology;
+				} else if (item.field === 'grouptype') {
+					_this.currentStateParams[item.field.toLowerCase()] = item.technology.split(' of')[0];
+				}
+			} else if (item.type){
+				//_this.currentStateParams[item.field.toLowerCase()] = item.technology;
+			}
+		});
+	}
+
 	_this.retrieveFiltersBasedOnType = retrieveFiltersBasedOnType;
 	_this.expandAddonFilter = expandAddonFilter;
 	_this.setQueryParams = setQueryParams;
@@ -449,7 +712,7 @@ function uiDpFilterController($scope, $templateCache, $timeout) {
 	_this.removeFilters = removeFilters;
 }
 
-uiDpFilterController.$inject=['$scope', '$templateCache', '$timeout'];
+uiDpFilterController.$inject=['$scope', '$templateCache', '$timeout', '$location'];
 
 
 angular

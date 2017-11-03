@@ -1,5 +1,3 @@
-
-require('jquery');
 require('ui-component');
 
 require('./components/uicDpFilter/uicDpFilter');

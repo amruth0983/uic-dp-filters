@@ -9,7 +9,8 @@ angular
     controller: 'uiDpFilterController',
     controllerAs: 'uiDpFilterCtrl',
     scope: {
-      config: '=?'
+      config: '=?',
+      selectedFilters: '=selectedFilters'
     },
     template: require('../../../templates/uicdpfiltertmpl.html'),
     restrict: 'AE',
