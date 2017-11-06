@@ -1,6 +1,6 @@
 {
    "name": "uic-dp-filters",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "DP Filters",
   "license": "ISC",
   "main": "dist/interface.js",
@@ -10,10 +10,7 @@
   },
   "dependencies": {
     "angular": "^1.6.6",
-    "event-emitter": "^1.1.1",
-    "eventemitter3": "^2.0.3",
-    "lodash": "^4.17.4",
-    "ui-component": "^2.1.1"
+    "lodash": "^4.17.4"
   },
   "optionalDependencies": {},
   "readme": "ERROR: No README data found!",

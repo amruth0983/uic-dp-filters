@@ -1,5 +1,3 @@
-require('ui-component');
-
 require('./components/uicDpFilter/uicDpFilter');
 
 angular.module('uic-dp-filter', ['uic-filter']);
